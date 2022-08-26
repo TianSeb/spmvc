@@ -2,9 +2,9 @@ package guru.springfamework.api.v1.mapper;
 
 import guru.springfamework.api.v1.model.CategoryDTO;
 import guru.springfamework.domain.Category;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CategoryMapperTest {
 
@@ -28,5 +28,4 @@ public class CategoryMapperTest {
         assertEquals(Long.valueOf(ID), categoryDTO.getId());
         assertEquals(NAME, categoryDTO.getName());
     }
-
 }
