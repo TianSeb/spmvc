@@ -1,4 +1,4 @@
-package guru.springfamework.domain;
+package guru.springfamework.controllers;
 
 import guru.springfamework.api.v1.model.CategoryDTO;
 import guru.springfamework.api.v1.model.CategoryListDTO;
@@ -19,7 +19,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<CategoryListDTO> allCategories() {
         return new ResponseEntity<>(
                 new CategoryListDTO(categoryService.getAllCategories()),
