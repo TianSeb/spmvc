@@ -1,18 +1,15 @@
 package tianseb.mvcrest.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import tianseb.mvcrest.api.v1.model.CategoryDTO;
 import tianseb.mvcrest.api.v1.model.CategoryListDTO;
 import tianseb.mvcrest.services.CategoryService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping("/api/v1/categories/")
+@RestController
+@RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
+    public static final String BASE_URL = "/api/v1/categories";
     private final CategoryService categoryService;
 
     public CategoryController(CategoryService categoryService) {
@@ -20,16 +17,14 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<CategoryListDTO> allCategories() {
-        return new ResponseEntity<>(
-                new CategoryListDTO(categoryService.getAllCategories()),
-                HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryListDTO allCategories() {
+        return new CategoryListDTO(categoryService.getAllCategories());
     }
 
-    @GetMapping("{categoryName}")
-    public ResponseEntity<CategoryDTO> categoryByName(@PathVariable String categoryName) {
-        return new ResponseEntity<>(
-                categoryService.getCategoryByName(categoryName),
-                HttpStatus.OK);
+    @GetMapping("/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDTO categoryByName(@PathVariable String name) {
+        return categoryService.getCategoryByName(name);
     }
 }

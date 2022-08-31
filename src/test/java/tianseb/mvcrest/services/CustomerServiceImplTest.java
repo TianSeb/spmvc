@@ -2,6 +2,7 @@ package tianseb.mvcrest.services;
 
 import tianseb.mvcrest.api.v1.mapper.CustomerMapper;
 import tianseb.mvcrest.api.v1.model.CustomerDTO;
+import tianseb.mvcrest.controllers.CustomerController;
 import tianseb.mvcrest.domain.Customer;
 import tianseb.mvcrest.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,7 +57,7 @@ class CustomerServiceImplTest {
         when(customerRepository.findById(anyLong())).thenReturn(Optional.ofNullable(customer));
 
         //when
-        CustomerDTO customerDTO = customerService.findById(ID);
+        CustomerDTO customerDTO = customerService.getCustomerById(ID);
 
         //then
         assertEquals(LASTNAME, customerDTO.getLastname());
@@ -80,6 +81,36 @@ class CustomerServiceImplTest {
         CustomerDTO savedDto = customerService.createNewCustomer(customerDTO);
 
         assertEquals(customerDTO.getFirstname(),savedDto.getFirstname());
-        assertEquals("/api/v1/customer/1",savedDto.getCustomerUrl());
+        assertEquals(CustomerController.BASE_URL + "/1",savedDto.getCustomerUrl());
+    }
+
+    @Test
+    void saveCustomerByDTO() throws Exception {
+        //given
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstname(NAME);
+        customerDTO.setLastname(LASTNAME);
+        customerDTO.setCustomerUrl(CustomerController.BASE_URL);
+
+        Customer savedCustomer = Customer.builder()
+                .id(ID)
+                .firstname(customerDTO.getFirstname())
+                .lastname(customerDTO.getLastname())
+                .build();
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+        CustomerDTO savedDto = customerService
+                .saveCustomerById(1L,customerDTO);
+
+        assertEquals(customerDTO.getFirstname(),savedDto.getFirstname());
+        assertEquals(CustomerController.BASE_URL + "/1",savedDto.getCustomerUrl());
+        verify(customerRepository,times(1)).save(any(Customer.class));
+    }
+
+    @Test
+    void deleteCustomerById() {
+        customerService.deleteCustomerById(ID);
+        verify(customerRepository,times(1)).deleteById(anyLong());
     }
 }

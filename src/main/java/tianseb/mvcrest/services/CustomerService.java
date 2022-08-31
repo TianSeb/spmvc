@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface CustomerService {
     List<CustomerDTO> findAllCustomers();
-    CustomerDTO findById(Long id);
+    CustomerDTO getCustomerById(Long id);
     CustomerDTO createNewCustomer(CustomerDTO customerDTO);
+    CustomerDTO saveCustomerById(Long id, CustomerDTO customerDTO);
+    CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO);
+    void deleteCustomerById(Long id);
 }

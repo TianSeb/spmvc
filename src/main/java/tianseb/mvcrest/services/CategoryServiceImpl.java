@@ -1,9 +1,9 @@
 package tianseb.mvcrest.services;
 
+import org.springframework.stereotype.Service;
 import tianseb.mvcrest.api.v1.mapper.CategoryMapper;
 import tianseb.mvcrest.api.v1.model.CategoryDTO;
 import tianseb.mvcrest.repositories.CategoryRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,4 +32,5 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDTO getCategoryByName(String name) {
         return categoryMapper.categoryToCategoryDTO(categoryRepository.findByName(name));
     }
+
 }
