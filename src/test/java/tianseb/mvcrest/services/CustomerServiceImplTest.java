@@ -61,7 +61,7 @@ class CustomerServiceImplTest {
 
         //then
         assertEquals(LASTNAME, customerDTO.getLastname());
-        verify(customerRepository,times(1)).findById(anyLong());
+        verify(customerRepository).findById(anyLong());
     }
 
     @Test
@@ -85,7 +85,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void saveCustomerByDTO() throws Exception {
+    void saveCustomerById() throws Exception {
         //given
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setFirstname(NAME);
