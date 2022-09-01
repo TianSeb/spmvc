@@ -49,7 +49,7 @@ class VendorServiceImplTest {
         when(vendorRepository.findAll()).thenReturn(vendors);
 
         //when
-        List<VendorDTO> vendorDTOS = vendorService.getAllVendors();
+        List<VendorDTO> vendorDTOS = vendorService.findAllVendors();
 
         //then
         assertEquals(2,vendorDTOS.size());
