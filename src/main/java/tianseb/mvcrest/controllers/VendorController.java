@@ -1,12 +1,10 @@
 package tianseb.mvcrest.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import tianseb.mvcrest.api.v1.model.VendorDTO;
+import tianseb.mvcrest.api.v1.model.VendorListDTO;
 import tianseb.mvcrest.services.VendorService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(VendorController.BASE_URL)
@@ -20,7 +18,20 @@ public class VendorController {
     }
 
     @GetMapping
-    public List<VendorDTO> allVendors() {
-        return vendorService.findAllVendors();
+    @ResponseStatus(HttpStatus.OK)
+    public VendorListDTO allVendors() {
+        return new VendorListDTO(vendorService.findAllVendors());
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public VendorDTO vendorById(@PathVariable Long id) {
+        return vendorService.getVendorById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public VendorDTO newVendor(@RequestBody VendorDTO vendorDTO) {
+        return vendorService.createNewVendor(vendorDTO);
     }
 }
