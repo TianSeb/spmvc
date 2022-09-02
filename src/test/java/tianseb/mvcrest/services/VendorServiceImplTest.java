@@ -19,6 +19,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -60,15 +62,14 @@ class VendorServiceImplTest {
     void getVendorById() {
         //given
         Long id = 1L;
-        when(vendorRepository.findById(anyLong())).thenReturn(Optional.ofNullable(vendor));
+        given(vendorRepository.findById(anyLong())).willReturn(Optional.ofNullable(vendor));
 
         //when
         VendorDTO vendorDTO = vendorService.getVendorById(id);
 
         //then
+        then(vendorRepository).should().findById(anyLong());
         assertEquals(NAME,vendorDTO.getName());
-        assertEquals(getVendorUrl(ID),vendorDTO.getVendor_url());
-        verify(vendorRepository).findById(anyLong());
     }
 
     @Test
